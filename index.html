@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>License Plate Decision</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f3f1eb;
+      font-family: Arial, sans-serif;
+      color: #252525;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 8px 30px #00000010;
+    }
+
+    .tag {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #888;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 18px 0 10px;
+    }
+
+    p { color: #777; line-height: 1.5; }
+
+    .options {
+      display: grid;
+      gap: 12px;
+      margin: 28px 0;
+    }
+
+    .option {
+      padding: 18px;
+      border: 2px solid #e5e5e5;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      background: white;
+      transition: .2s;
+    }
+
+    .option:hover { border-color: #777; }
+
+    .option.selected {
+      border-color: #252525;
+      background: #f1f1ed;
+    }
+
+    button.next {
+      width: 100%;
+      padding: 16px;
+      background: #252525;
+      color: white;
+      border: 0;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button.next:disabled {
+      opacity: .3;
+      cursor: not-allowed;
+    }
+
+    .hidden { display: none; }
+
+    .result {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 25px 0;
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 10px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section id="vote">
+      <div class="tag">OFFICIAL FAMILY VOTE • EST. 2026</div>
+      <h1>We need your opinion.</h1>
+      <p>A very important decision must be made.<br>
+      Please choose your preferred license plate.</p>
+
+      <div class="options">
+        <button class="option" onclick="choose('Keep the old license plate', this)">
+          Keep the old license plate
+        </button>
+        <button class="option" onclick="choose('Get a new car plate', this)">
+          Get a new car plate
+        </button>
+      </div>
+
+      <button class="next" id="next" onclick="submitVote()" disabled>
+        Next →
+      </button>
+    </section>
+
+    <section id="done" class="hidden">
+      <div class="tag">VOTE RECORDED</div>
+      <h1>Thank you for participating.</h1>
+      <p>Your official selection was:</p>
+      <div class="result" id="answer"></div>
+      <p>Your opinion has finally been heard.</p>
+      <button class="next" onclick="location.reload()">Vote again</button>
+    </section>
+
+    <div class="footer">
+      THE FAMILY LICENSE PLATE COMMITTEE © 2026
+    </div>
+  </main>
+
+  <script>
+    let selection = "";
+
+    function choose(choice, button) {
+      selection = choice;
+
+      document.querySelectorAll(".option").forEach(option => {
+        option.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+      document.getElementById("next").disabled = false;
+    }
+
+    function submitVote() {
+      if (!selection) return;
+
+      document.getElementById("vote").classList.add("hidden");
+      document.getElementById("done").classList.remove("hidden");
+      document.getElementById("answer").textContent = selection;
+    }
+  </script>
+</body>
+</html>
